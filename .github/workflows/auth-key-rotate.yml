@@ -1,3 +1,4 @@
+# $version: v1-1774458641
 name: Rotate Tailscale auth key into Cloudflare
 
 on:
@@ -95,7 +96,8 @@ jobs:
           wrangler secrets-store secret update "$CF_STORE_ID" \
                    --secret-id "$CF_SECRET_ID" \
                    --value ${{ steps.create_key.outputs.ts_authkey }} \
-                   --remote
+                   --remote \
+                   --comment='Rotated by GitHub Workflows'
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
