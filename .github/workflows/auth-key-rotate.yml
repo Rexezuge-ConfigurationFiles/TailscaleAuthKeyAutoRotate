@@ -92,7 +92,7 @@ jobs:
       - name: Write Secret to Cloudflare Secrets Store
         run: |
           set -euo pipefail
-          echo 'Find $CF_SECRET_ID with `wrangler secrets-store secret list "$CF_STORE_ID" --remote`'
+          echo 'Hint: Find $CF_SECRET_ID with `wrangler secrets-store secret list "$CF_STORE_ID" --remote`'
           wrangler secrets-store secret update "$CF_STORE_ID" \
                    --secret-id "$CF_SECRET_ID" \
                    --value ${{ steps.create_key.outputs.ts_authkey }} \
