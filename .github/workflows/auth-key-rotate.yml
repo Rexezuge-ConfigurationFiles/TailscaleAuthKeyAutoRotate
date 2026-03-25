@@ -9,35 +9,10 @@ jobs:
   rotate:
     name: "Rorate"
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
 
-    env:
-      TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-      TS_OAUTH_CLIENT_SECRET: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
-      TS_TAG: ${{ vars.TS_TAG }}
-      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-      CF_STORE_ID: ${{ secrets.CF_STORE_ID }}
-      CF_SECRET_NAME: ${{ secrets.CF_SECRET_NAME }}
-
     steps:
-      - name: Debug secret presence
-        run: |
-          set -euo pipefail
-          test -n "${TS_OAUTH_CLIENT_ID}" || { echo "TS_OAUTH_CLIENT_ID is empty"; exit 1; }
-          test -n "${TS_OAUTH_CLIENT_SECRET}" || { echo "TS_OAUTH_CLIENT_SECRET is empty"; exit 1; }
-          echo "client_id_len=${#TS_OAUTH_CLIENT_ID}"
-          echo "client_secret_len=${#TS_OAUTH_CLIENT_SECRET}"
-        env:
-          TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          TS_OAUTH_CLIENT_SECRET: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
-      - name: Install Tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-          npm install -g wrangler@latest
-
       - name: Exchange OAuth Client for Tailscale API Access Token
         id: oauth
         run: |
@@ -111,3 +86,7 @@ jobs:
           wrangler secrets-store secret update "$CF_STORE_ID" \
                    --secret-id "$CF_SECRET_NAME" \
                    --value ${{ steps.create_key.outputs.ts_authkey }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_STORE_ID: ${{ secrets.CF_STORE_ID }}
+          CF_SECRET_NAME: ${{ secrets.CF_SECRET_NAME }}
