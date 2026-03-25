@@ -79,6 +79,8 @@ jobs:
 
           echo "::add-mask::$TS_AUTHKEY"
           echo "ts_authkey=$TS_AUTHKEY" >> "$GITHUB_OUTPUT"
+        env:
+          TS_TAG: ${{ vars.TS_TAG }}
 
       - name: Write Secret to Cloudflare Secrets Store
         run: |
