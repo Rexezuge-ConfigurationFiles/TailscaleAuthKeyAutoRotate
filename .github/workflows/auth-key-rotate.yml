@@ -7,6 +7,7 @@ on:
 
 jobs:
   rotate:
+    name: "Rorate"
     runs-on: ubuntu-latest
 
     permissions:
@@ -21,6 +22,16 @@ jobs:
       CF_SECRET_NAME: ${{ secrets.CF_SECRET_NAME }}
 
     steps:
+      - name: Debug secret presence
+        run: |
+          set -euo pipefail
+          test -n "${TS_OAUTH_CLIENT_ID}" || { echo "TS_OAUTH_CLIENT_ID is empty"; exit 1; }
+          test -n "${TS_OAUTH_CLIENT_SECRET}" || { echo "TS_OAUTH_CLIENT_SECRET is empty"; exit 1; }
+          echo "client_id_len=${#TS_OAUTH_CLIENT_ID}"
+          echo "client_secret_len=${#TS_OAUTH_CLIENT_SECRET}"
+        env:
+          TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          TS_OAUTH_CLIENT_SECRET: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
       - name: Install Tools
         run: |
           sudo apt-get update
