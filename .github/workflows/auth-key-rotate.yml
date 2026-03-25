@@ -1,5 +1,5 @@
 # $version: v1-1774458641
-name: Rotate Tailscale auth key into Cloudflare
+name: Rotate Tailscale Device Auth Key into Cloudflare
 
 on:
   schedule:
