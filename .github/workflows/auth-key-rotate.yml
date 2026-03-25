@@ -36,8 +36,7 @@ jobs:
             curl -fsS https://api.tailscale.com/api/v2/oauth/token \
               -d "client_id=${TS_OAUTH_CLIENT_ID}" \
               -d "client_secret=${TS_OAUTH_CLIENT_SECRET}" \
-              -d "scope=auth_keys" \
-              --data-urlencode "tags=${TS_TAG}"
+              -d "scope=auth_keys"
           )"
 
           ACCESS_TOKEN="$(echo "$RESP" | jq -r '.access_token')"
