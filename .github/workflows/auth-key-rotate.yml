@@ -13,6 +13,12 @@ jobs:
       contents: read
 
     steps:
+      - name: Install Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          npm install -g wrangler@latest
+
       - name: Exchange OAuth Client for Tailscale API Access Token
         id: oauth
         run: |
