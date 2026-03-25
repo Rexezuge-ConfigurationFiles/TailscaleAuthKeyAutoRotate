@@ -64,7 +64,7 @@ jobs:
                   }
                 }
               },
-              expirySeconds: 2592000,
+              expirySeconds: 2700000,
               description: "Rotated by GitHub Workflows"
             }'
           )"
